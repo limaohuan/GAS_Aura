@@ -5,11 +5,56 @@
 
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Interaction/EnemyInterface.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
 	// 可以保证服务器更改数据后，其他和服务器相连的客户端的数据也被修改
 	bReplicates = true;
+}
+
+void AAuraPlayerController::PlayerTick(float DeltaTime)
+{
+    Super::PlayerTick(DeltaTime);
+
+    CursorTrace();
+}
+
+void AAuraPlayerController::CursorTrace()
+{
+    // 用于存储射线检测结果的变量
+    FHitResult CursorHit;
+    // 从鼠标光标位置发射射线检测，只检测可见通道(ECC_Visibility)的对象
+    // false参数表示不忽略任何复杂的碰撞检测
+    GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+    // 如果没有命中任何阻挡物体
+    if (!CursorHit.bBlockingHit) return;
+
+    LastActor = ThisActor;
+    ThisActor = CursorHit.GetActor();
+
+    if (LastActor == nullptr)
+    {
+        if (ThisActor != nullptr)
+        {
+            ThisActor->HighlightActor();
+        }
+    }
+    else
+    {
+        if (ThisActor == nullptr)
+        {
+            LastActor->UnHighlightActor();
+        }
+        else
+        {
+            if (LastActor != ThisActor)
+            {
+                LastActor->UnHighlightActor();
+                ThisActor->HighlightActor();
+            }
+        }
+    }
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -66,3 +111,5 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
         ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
     }
 }
+
+
