@@ -2,13 +2,19 @@
 
 
 #include "Character/AuraEnemy.h"
+#include "Aura/Aura.h"
 
 void AAuraEnemy::HighlightActor()
 {
-	bHighlighted = true;
+	// 修改网格体的渲染自定义深度通道值为250以触发场景中PostProccessingVolume以高亮网格体
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	Weapon->SetRenderCustomDepth(true);
+	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 }
 
 void AAuraEnemy::UnHighlightActor()
 {
-	bHighlighted = false;
+	GetMesh()->SetRenderCustomDepth(false);
+	Weapon->SetRenderCustomDepth(false);
 }
