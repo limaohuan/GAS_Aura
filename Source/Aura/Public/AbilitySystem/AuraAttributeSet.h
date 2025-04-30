@@ -3,17 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerState.h"
-#include "AuraPlayerState.generated.h"
+#include "AttributeSet.h"
+#include "AuraAttributeSet.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class AURA_API AAuraPlayerState : public APlayerState
+class AURA_API UAuraAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
 	
-public:
-	AAuraPlayerState();
 };
