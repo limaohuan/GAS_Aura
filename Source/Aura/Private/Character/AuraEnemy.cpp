@@ -4,6 +4,12 @@
 #include "Character/AuraEnemy.h"
 #include "Aura/Aura.h"
 
+AAuraEnemy::AAuraEnemy()
+{
+	// 将mesh的碰撞预设的visibility设为blocked
+	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+}
+
 void AAuraEnemy::HighlightActor()
 {
 	// 修改网格体的渲染自定义深度通道值为250以触发场景中PostProccessingVolume以高亮网格体
