@@ -3,11 +3,18 @@
 
 #include "Character/AuraEnemy.h"
 #include "Aura/Aura.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 
 AAuraEnemy::AAuraEnemy()
 {
 	// 将mesh的碰撞预设的visibility设为blocked
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+
+	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemCompunent");
+	AbilitySystemComponent->SetIsReplicated(true);
+
+	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 }
 
 void AAuraEnemy::HighlightActor()
