@@ -21,6 +21,8 @@ public:
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
+	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
