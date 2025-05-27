@@ -59,5 +59,5 @@ void AAuraCharacter::InitAbilityActorInfo()
 		}
 	}
 	// 初始化初级属性
-	InitializePrimaryAttributes();
+	InitializeDefaultAttributes();
 }
