@@ -4,6 +4,8 @@
 #include "Character/AuraCharacterBase.h"
 #include "GameplayEffect.h"
 #include "AbilitySystemComponent.h"
+#include <Abilities/GameplayAbility.h>
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 
 // Sets default values
 AAuraCharacterBase::AAuraCharacterBase()
@@ -48,4 +50,13 @@ void AAuraCharacterBase::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
+}
+
+void AAuraCharacterBase::AddStartupAbilities()
+{
+	UAuraAbilitySystemComponent* AuraASC = CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+	// 只有在服务器上才能添加初始技能
+	if (!HasAuthority()) return;
+
+	AuraASC->AddStartupAbilities(StartupAbilities);
 }
